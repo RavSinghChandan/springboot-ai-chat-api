@@ -1,5 +1,7 @@
 package com.chandan.ai.chatapi.client;
 
+import reactor.core.publisher.Mono;
+
 public interface AiClient {
-    public String getResponse(String prompt);
+    public Mono<String> getResponse(String prompt);
 }

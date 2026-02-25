@@ -1,5 +1,7 @@
 package com.chandan.ai.chatapi.service;
 
+import reactor.core.publisher.Mono;
+
 public interface ChatService {
-    public String chat(String message);
+    public Mono<String> chat(String message);
 }

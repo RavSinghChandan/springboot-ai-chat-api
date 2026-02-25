@@ -1,7 +1,4 @@
 
-# 🧠 Learning Strategy (Reverse-Engineering Style — PERFECT CHOICE)
-
-Your idea is excellent and actually how senior engineers learn fast:
 
 > Build → Break → Debug → Learn → Document → Repeat
 

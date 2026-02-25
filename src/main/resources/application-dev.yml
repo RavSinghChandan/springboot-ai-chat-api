@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+ai:
+  api:
+    key: ${OPENAI_API_KEY}
+
+logging:
+  level:
+    root: INFO
+    com.chandan.ai: DEBUG

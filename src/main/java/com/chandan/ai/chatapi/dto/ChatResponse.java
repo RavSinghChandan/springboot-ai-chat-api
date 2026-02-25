@@ -2,6 +2,9 @@ package com.chandan.ai.chatapi.dto;
 
 public class ChatResponse {
 
+    public ChatResponse() {
+    }
+
     private String reply;
 
     public ChatResponse(String reply) {

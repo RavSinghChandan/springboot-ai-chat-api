@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+ai:
+  api:
+    key: ${OPENAI_API_KEY}
+
+logging:
+  level:
+    root: WARN
+    com.chandan.ai: INFO
