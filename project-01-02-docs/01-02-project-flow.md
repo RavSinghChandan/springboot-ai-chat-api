@@ -32,3 +32,19 @@
                 │   AI Provider API  │
                 │  (External Model)  │
                 └────────────────────┘
+```
+## 🏗 Architecture Flow
+
+
+Controller
+↓
+Service (Reactive)
+↓
+WebClient (Non-blocking)
+↓
+OpenAI API (Streaming)
+↓
+Flux<String>
+↓
+SSE Response
+```
