@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -50,14 +51,13 @@ public class AiClientImpl implements AiClient {
         this.meterRegistry = meterRegistry;
 
         this.latencyTimer = Timer.builder("ai.api.latency")
-                .description("AI API response time")
                 .register(meterRegistry);
 
         this.failureCounter = Counter.builder("ai.api.failures")
-                .description("AI API failure count")
                 .register(meterRegistry);
     }
 
+    // ✅ Normal call (Project 1)
     @Override
     @Retry(name = "aiRetry")
     @CircuitBreaker(name = "aiCircuit", fallbackMethod = "fallbackResponse")
@@ -76,44 +76,77 @@ public class AiClientImpl implements AiClient {
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(this::extractText)
-                .doOnSuccess(response ->
-                        sample.stop(latencyTimer)
-                )
-                .doOnError(error -> {
+                .doOnSuccess(r -> sample.stop(latencyTimer))
+                .doOnError(e -> {
                     failureCounter.increment();
                     sample.stop(latencyTimer);
-                    log.error("Error while calling AI API", error);
+                });
+    }
+
+    // ✅ Streaming call (Project 2)
+    @Override
+    @Retry(name = "aiRetry")
+    @CircuitBreaker(name = "aiCircuit", fallbackMethod = "fallbackStream")
+    public Flux<String> streamResponse(String prompt) {
+
+        Timer.Sample sample = Timer.start(meterRegistry);
+
+        return webClient.post()
+                .uri(apiUrl)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(Map.of(
+                        "model", model,
+                        "input", prompt,
+                        "stream", true
+                ))
+                .retrieve()
+                .bodyToFlux(String.class)
+                .map(this::extractStreamText)
+                .doOnComplete(() -> sample.stop(latencyTimer))
+                .doOnError(e -> {
+                    failureCounter.increment();
+                    sample.stop(latencyTimer);
                 });
     }
 
     private String extractText(String json) {
-
         try {
             JsonNode root = objectMapper.readTree(json);
             JsonNode outputArray = root.path("output");
 
             for (JsonNode node : outputArray) {
                 if ("message".equals(node.path("type").asText())) {
-                    return node
-                            .path("content")
-                            .get(0)
-                            .path("text")
-                            .asText();
+                    return node.path("content").get(0).path("text").asText();
                 }
             }
-
             throw new AiServiceException("AI response format unexpected.");
-
         } catch (Exception e) {
-            failureCounter.increment();
-            log.error("Failed to parse AI response", e);
-            throw new AiServiceException("Failed to parse AI response.");
+            throw new AiServiceException("Failed to parse AI response.", e);
         }
     }
 
-    public Mono<String> fallbackResponse(String prompt, Throwable throwable) {
-        failureCounter.increment();
-        log.error("Circuit breaker activated.", throwable);
-        return Mono.just("AI service is temporarily unavailable. Please try again later.");
+    private String extractStreamText(String chunk) {
+        try {
+            JsonNode root = objectMapper.readTree(chunk);
+            JsonNode outputArray = root.path("output");
+
+            for (JsonNode node : outputArray) {
+                if ("message".equals(node.path("type").asText())) {
+                    return node.path("content").get(0).path("text").asText();
+                }
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public Mono<String> fallbackResponse(String prompt, Throwable t) {
+        return Mono.just("AI service is temporarily unavailable.");
+    }
+
+    public Flux<String> fallbackStream(String prompt, Throwable t) {
+        return Flux.just("AI service is temporarily unavailable.");
     }
 }

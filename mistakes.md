@@ -117,3 +117,68 @@ Before asking for help:
 ---
 
 ✔ Status: Project successfully runs after fixes.
+📕 MISTAKES.md (Add This Section)
+# Project 2 — Streaming Mistakes & Lessons
+
+## Mistake 1 — Assuming Streaming JSON Comes Clean
+
+Expected:
+- Each chunk = valid JSON
+
+Reality:
+- Streaming uses SSE frames
+- Format:
+  data: {json}
+  data: [DONE]
+
+Lesson:
+Always inspect raw streaming protocol.
+
+---
+
+## Mistake 2 — Using .map Instead of .flatMap
+
+Wrong:
+.map(this::extractText)
+
+Correct:
+.flatMap(this::parseSseChunk)
+
+Reason:
+Some chunks produce zero results.
+map cannot drop emissions safely.
+
+---
+
+## Mistake 3 — Blocking in Reactive Flow
+
+Used:
+.block()
+
+This defeats:
+- Non-blocking architecture
+- Scalability benefits
+
+Lesson:
+Never block inside WebFlux pipeline.
+
+---
+
+## Mistake 4 — Confusion Between Responses API and Chat API
+
+Streaming behavior differs.
+Not all APIs stream in identical format.
+
+Lesson:
+Read API streaming documentation carefully.
+
+---
+
+## Mistake 5 — Expecting Instant Visual Feedback
+
+When stream parsing fails:
+Browser still shows `data:` events.
+
+Lesson:
+SSE always emits frames.
+If content empty → parsing logic issue.

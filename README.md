@@ -126,3 +126,67 @@ Senior Full Stack Developer — Java + Microservices
 ---
 
 ⭐ *Part of a structured roadmap to become an AI-ready backend engineer.*
+📄 README.md (Add This Section)
+
+Add this section below your main project description.
+
+## 🚀 Project 2 — Streaming AI Response
+
+This project upgrades the basic AI chat API into a reactive streaming architecture.
+
+### Endpoint
+
+POST `/api/chat/stream`
+
+### Response Type
+
+`text/event-stream`
+
+### Tech Stack
+
+- Spring Boot 3
+- Spring WebFlux
+- Reactor (Mono / Flux)
+- WebClient
+- Resilience4j
+- Micrometer
+- SSE (Server-Sent Events)
+
+---
+
+## 🧠 Why Streaming?
+
+Streaming allows:
+
+- Real-time token emission
+- Better user experience
+- Lower perceived latency
+- ChatGPT-style typing response
+
+---
+
+## 🏗 Architecture Flow
+
+
+Controller
+↓
+Service (Reactive)
+↓
+WebClient (Non-blocking)
+↓
+OpenAI API (Streaming)
+↓
+Flux<String>
+↓
+SSE Response
+
+
+---
+
+## 🔬 What This Project Demonstrates
+
+- Reactive programming fundamentals
+- Event-driven backend design
+- Non-blocking API integration
+- Production-grade resilience patterns
+- Streaming protocol understanding

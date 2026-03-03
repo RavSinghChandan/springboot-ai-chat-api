@@ -209,4 +209,104 @@ Production AI Concepts
 https://www.latent.space/
 
 ---
+📘 LEARNING.md (Add This Section)
+# Project 2 — Streaming AI Response
 
+## What I Built
+
+- Implemented Server-Sent Events (SSE)
+- Converted blocking AI response into reactive streaming
+- Used Spring WebFlux + Reactor (Flux / Mono)
+- Built non-blocking WebClient integration
+- Measured latency using Micrometer
+- Applied Resilience4j (Retry + CircuitBreaker)
+
+---
+
+## Key Technical Learnings
+
+### 1️⃣ Difference Between Blocking and Reactive
+
+Blocking:
+
+String response = aiClient.getResponse(prompt);
+
+
+Reactive:
+
+Flux<String> stream = aiClient.streamResponse(prompt);
+
+
+Blocking waits for full response.
+Reactive emits data gradually.
+
+---
+
+### 2️⃣ What is SSE (Server-Sent Events)?
+
+SSE format:
+
+data: chunk1
+data: chunk2
+data: chunk3
+
+
+Spring Boot automatically wraps Flux elements into SSE format when:
+
+produces = MediaType.TEXT_EVENT_STREAM_VALUE
+
+
+---
+
+### 3️⃣ Why Streaming Improves UX
+
+Without streaming:
+- User waits 5–6 seconds with no feedback.
+
+With streaming:
+- User sees text gradually (like ChatGPT typing).
+- Perceived latency reduces dramatically.
+
+---
+
+### 4️⃣ WebClient vs RestTemplate
+
+RestTemplate:
+- Blocking
+- Thread-per-request
+- Not scalable
+
+WebClient:
+- Non-blocking
+- Event-loop based
+- High concurrency friendly
+
+---
+
+### 5️⃣ Understanding Backpressure
+
+Flux allows:
+- Controlled data emission
+- Reactive pipelines
+- Better memory management under load
+
+---
+
+### 6️⃣ Realization About Modern AI APIs
+
+- Streaming is protocol-level (SSE)
+- Must parse raw frames
+- Cannot assume each chunk is clean JSON
+- Responses API and Chat Completions API stream differently
+
+---
+
+## Architecture Evolution
+
+Project 1:
+Controller → Service → WebClient → Mono<String>
+
+Project 2:
+Controller → Service → WebClient → Flux<String> → SSE
+
+This is architectural maturity progression.

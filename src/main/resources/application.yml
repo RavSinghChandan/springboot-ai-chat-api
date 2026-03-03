@@ -1,3 +1,6 @@
+server:
+  shutdown: graceful
+
 management:
   endpoints:
     web:
@@ -21,11 +24,12 @@ resilience4j:
         max-attempts: 3
         wait-duration: 2s
         retry-exceptions:
-          - org.springframework.web.client.HttpServerErrorException
-          - org.springframework.web.client.ResourceAccessException
-          -
+          - org.springframework.web.reactive.function.client.WebClientRequestException
+          - com.chandan.ai.chatapi.exception.AiServiceException
 spring:
   profiles:
+    lifecycle:
+      timeout-per-shutdown-phase: 10s
     active: dev
   application:
     name: chatapi
