@@ -1,16 +1,6 @@
-Excellent.
-Now we turn this into **true mastery documentation** — with curated learning links.
 
-This is **Part 1 — AI Concept Mastery (with deep learning references)**
-Copy-paste this directly into:
 
-```
-project-3/learning.md
-```
 
----
-
-# 📘 learning.md
 
 # Project 3 — AI Learning (Conceptual Mastery)
 

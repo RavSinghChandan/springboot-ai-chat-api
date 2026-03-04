@@ -1,23 +1,6 @@
-Excellent.
 
-This is the most powerful document for interviews.
 
-Senior engineers stand out because they can articulate:
 
-> What broke
-> Why it broke
-> How they fixed it
-> What principle they learned
-
-Copy this into:
-
-```id="d3m6kq"
-project-3/mistakes.md
-```
-
----
-
-# 🧨 mistakes.md
 
 # Project 3 — AI Smart Log Analyzer
 

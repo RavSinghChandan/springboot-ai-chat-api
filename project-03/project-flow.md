@@ -1,28 +1,3 @@
-Perfect.
-
-Now we create:
-
-```
-project-3/project-flow.md
-```
-
-This document explains:
-
-* End-to-end execution flow
-* Internal system flow
-* AI interaction flow
-* Failure flow
-* Production-level thinking
-
-This is what senior engineers use during architecture discussions.
-
-Copy everything below into:
-
-```id="7mcl1z"
-project-3/project-flow.md
-```
-
----
 
 # 🔄 Project Flow — AI Smart Log Analyzer
 
