@@ -27,6 +27,10 @@ resilience4j:
           - org.springframework.web.reactive.function.client.WebClientRequestException
           - com.chandan.ai.chatapi.exception.AiServiceException
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
   profiles:
     lifecycle:
       timeout-per-shutdown-phase: 10s

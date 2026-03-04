@@ -1,0 +1,33 @@
+2026-03-03 10:12:31 INFO  Starting Application...
+2026-03-03 10:12:32 INFO  HikariPool-1 - Starting...
+2026-03-03 10:12:35 ERROR org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection
+2026-03-03 10:12:35 ERROR Caused by: java.net.ConnectException: Connection refused
+2026-03-03 10:12:36 WARN  Retry attempt 1 failed
+2026-03-03 10:12:37 WARN  Retry attempt 2 failed
+2026-03-03 10:12:40 ERROR Application failed to start
+
+2026-03-03 14:22:10 INFO  User login request received
+2026-03-03 14:22:11 ERROR java.lang.NullPointerException
+	at com.example.userservice.UserService.getUser(UserService.java:45)
+	at com.example.controller.UserController.login(UserController.java:28)
+2026-03-03 14:22:12 ERROR Request processing failed
+
+2026-03-03 16:10:01 INFO  Processing large batch request
+2026-03-03 16:10:10 WARN  GC overhead limit exceeded
+2026-03-03 16:10:12 ERROR java.lang.OutOfMemoryError: Java heap space
+2026-03-03 16:10:13 ERROR Application crashed unexpectedly
+
+2026-03-03 18:45:21 INFO  Calling payment-service
+2026-03-03 18:45:31 ERROR org.springframework.web.client.ResourceAccessException: I/O error on POST request
+2026-03-03 18:45:31 ERROR Caused by: java.net.SocketTimeoutException: Read timed out
+2026-03-03 18:45:32 WARN  Circuit breaker opened for payment-service
+
+2026-03-03 19:01:44 INFO  Order service initialized
+2026-03-03 19:01:50 ERROR org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2026-03-03 19:01:50 ERROR Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'user_namee' in 'field list'
+2026-03-03 19:01:52 WARN  Rolling back transaction
+
+2026-03-03 19:30:15 INFO  Scheduled job started
+2026-03-03 19:30:16 ERROR java.lang.IllegalArgumentException: Invalid input parameter
+2026-03-03 19:30:16 ERROR	at com.example.scheduler.JobProcessor.process(JobProcessor.java:78)
+2026-03-03 19:30:17 INFO  Scheduled job terminated
