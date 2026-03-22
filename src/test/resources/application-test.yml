@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+rav:
+  security:
+    enabled: false
+  kafka:
+    enabled: false
+
+ai:
+  api:
+    key: test-key-for-context-load
+    url: https://api.openai.com/v1/responses
+    model: gpt-5-nano
