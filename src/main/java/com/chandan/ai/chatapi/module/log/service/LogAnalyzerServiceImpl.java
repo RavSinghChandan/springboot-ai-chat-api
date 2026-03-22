@@ -1,4 +1,4 @@
-package com.chandan.ai.chatapi.service;
+package com.chandan.ai.chatapi.module.log.service;
 
 import com.chandan.ai.chatapi.client.AiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,0 +1,10 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+ai:
+  api:
+    key: test-key-for-context-load
+    url: https://api.openai.com/v1/responses
+    model: gpt-5-nano

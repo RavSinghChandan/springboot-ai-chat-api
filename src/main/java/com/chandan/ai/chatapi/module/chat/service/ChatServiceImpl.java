@@ -1,10 +1,9 @@
-package com.chandan.ai.chatapi.service;
+package com.chandan.ai.chatapi.module.chat.service;
 
 import com.chandan.ai.chatapi.client.AiClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -19,7 +18,6 @@ public class ChatServiceImpl implements ChatService {
         this.aiClient = aiClient;
     }
 
-    // Project 1 – Normal Response
     @Override
     public Mono<String> chat(String message) {
 
@@ -35,25 +33,6 @@ public class ChatServiceImpl implements ChatService {
                 .doOnError(error -> {
                     long duration = System.currentTimeMillis() - startTime;
                     log.error("AI request failed after {} ms", duration, error);
-                });
-    }
-
-    // Project 2 – Streaming Response
-    @Override
-    public Flux<String> streamChat(String message) {
-
-        log.info("Received streaming chat request. Message length={}", message.length());
-
-        long startTime = System.currentTimeMillis();
-
-        return aiClient.streamResponse(message)
-                .doOnComplete(() -> {
-                    long duration = System.currentTimeMillis() - startTime;
-                    log.info("Streaming completed in {} ms", duration);
-                })
-                .doOnError(error -> {
-                    long duration = System.currentTimeMillis() - startTime;
-                    log.error("Streaming failed after {} ms", duration);
                 });
     }
 }

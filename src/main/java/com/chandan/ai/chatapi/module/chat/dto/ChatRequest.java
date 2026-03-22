@@ -1,5 +1,4 @@
-package com.chandan.ai.chatapi.dto;
-
+package com.chandan.ai.chatapi.module.chat.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

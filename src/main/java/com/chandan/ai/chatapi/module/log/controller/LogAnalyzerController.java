@@ -1,6 +1,6 @@
-package com.chandan.ai.chatapi.controller;
+package com.chandan.ai.chatapi.module.log.controller;
 
-import com.chandan.ai.chatapi.service.LogAnalyzerService;
+import com.chandan.ai.chatapi.module.log.service.LogAnalyzerService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
