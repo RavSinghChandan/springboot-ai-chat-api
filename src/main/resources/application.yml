@@ -37,11 +37,41 @@ spring:
     active: dev
   application:
     name: chatapi
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: rav-ai-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 ai:
   api:
     url: https://api.openai.com/v1/responses
     model: gpt-5-nano
+
+rav:
+  security:
+    enabled: true
+    api-key: ${RAV_API_KEY:}
+  kafka:
+    enabled: true
+    topics:
+      input: rav-ai.log-events.input
+      output: rav-ai.log-events.output
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
 
 logging:
   pattern:

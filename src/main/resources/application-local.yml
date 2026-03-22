@@ -1,0 +1,15 @@
+# Local dev profile - use: -Dspring.profiles.active=local
+spring:
+  config:
+    activate:
+      on-profile: local
+
+rav:
+  security:
+    enabled: false
+
+ai:
+  api:
+    key: local-dev-key
+    url: https://api.openai.com/v1/responses
+    model: gpt-5-nano

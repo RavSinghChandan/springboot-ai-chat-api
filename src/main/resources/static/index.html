@@ -23,7 +23,7 @@
 <body>
 
 <h2>AI Streaming Chat</h2>
-
+<input id="apiKey" type="password" placeholder="API Key (optional)" style="width:300px;margin-bottom:8px"><br>
 <textarea id="message" placeholder="Type your message..."></textarea><br><br>
 <button onclick="startStream()">Send</button>
 
@@ -37,11 +37,12 @@
 
         responseDiv.innerHTML = "";
 
+        const headers = { "Content-Type": "application/json" };
+        const apiKey = document.getElementById("apiKey")?.value;
+        if (apiKey) headers["X-API-Key"] = apiKey;
         fetch("/api/chat/stream", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify({ message: message })
         }).then(response => {
 

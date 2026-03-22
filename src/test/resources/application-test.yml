@@ -2,6 +2,15 @@ spring:
   config:
     activate:
       on-profile: test
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+rav:
+  security:
+    enabled: false
+  kafka:
+    enabled: false
 
 ai:
   api:
