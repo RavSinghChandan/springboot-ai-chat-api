@@ -41,9 +41,26 @@ public class SecurityConfig {
             return http.securityMatcher("/**").authorizeHttpRequests(a -> a.anyRequest().permitAll()).build();
         }
         return http
-                .securityMatcher("/api/**", "/swagger-ui/**", "/v3/api-docs/**", "/", "/index.html")
-                .addFilterBefore(new ApiKeyFilter(apiKey), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(a -> a.anyRequest().authenticated())
+                .securityMatcher("/**")
+                .addFilterBefore(new ApiKeyFilter(apiKey),
+                        org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(a -> a
+                        // Swagger should be PUBLIC
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
+                        // Actuator (optional)
+                        .requestMatchers("/actuator/**").permitAll()
+
+                        // Protect APIs
+                        .requestMatchers("/api/**").authenticated()
+
+                        // Everything else
+                        .anyRequest().permitAll()
+                )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(c -> c.disable())
                 .headers(h -> h.xssProtection(x -> x.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))

@@ -28,6 +28,8 @@ resilience4j:
           - com.chandan.ai.chatapi.exception.AiServiceException
 spring:
   servlet:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
